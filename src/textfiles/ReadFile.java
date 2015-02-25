@@ -1,14 +1,18 @@
 package textfiles;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.util.EmptyStackException;
+
+import javax.annotation.processing.FilerException;
 
 
 public class ReadFile 
 {
 
-	private String path;
+	private static String path;
 	public ReadFile (String file_path) 
 	{
 		path=file_path;
@@ -38,7 +42,7 @@ public class ReadFile
 		FileReader file_to_read = new FileReader(path);
 		BufferedReader bf = new BufferedReader(file_to_read);
 		
-		String aLine;
+		String aLine ;
 		int numOfLines = 0;
 		
 		while ((aLine = bf.readLine()) != null)
@@ -47,7 +51,19 @@ public class ReadFile
 		}
 		bf.close();
 		return numOfLines;
+	}	
+	
+	public static void checkIfFileEmpty() throws Exception
+	{
+		File file = new File(path);
+
+		if (!file.exists() || file.length() == 0)
+		{
+			System.out.println("the file is empty");
+			throw new Exception();
+		}
 	}
+	
 }
 
 
